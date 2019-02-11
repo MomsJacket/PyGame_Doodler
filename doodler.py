@@ -55,7 +55,6 @@ def load_image(name, colorkey=None):
 '''
 Подгрузка музыки и фона
 '''
-
 background = load_image("background.png")
 pg.mixer.init()
 pg.mixer.music.load("data\\background_music.wav")
@@ -327,9 +326,10 @@ class Game:
             name = pg.transform.rotate(name, 15)
             self.screen.blit(name, (-10, -10))
             play_button = PlayButton(250, 220)
-            self.screen.blit(play_button.image, (250, 220))
+            self.screen.blit(play_button.image, (play_button.rect.x,
+                                                 play_button.rect.y))
             option = OptionButton(235, 390)
-            self.screen.blit(option.image, (235, 390))
+            self.screen.blit(option.image, (option.rect.x, option.rect.y))
             nlo_body = load_image("nlo_body.png")
             nlo_laser = load_image("nlo_laser.png")
             self.screen.blit(nlo_body, (nlo_x, nlo_y))
@@ -339,7 +339,7 @@ class Game:
             if nlo_y < 10 or nlo_y > 20:
                 nlo_k *= -1
             scores = ScoresButton(235, 300)
-            self.screen.blit(scores.image, (235, 300))
+            self.screen.blit(scores.image, (scores.rect.x, scores.rect.y))
             self.all_sprites.update()
             self.all_sprites.draw(self.screen)
             doodle.jump()
@@ -383,8 +383,9 @@ class Game:
             self.display_text("Best score: " + str(data[0].split()[2]),
                               130, 300, 30, BLACK)
             self.display_text("Your name: Doodler", 140, 350, 30, BLACK)
-            self.screen.blit(play_again.image, (200, 450))
-            self.screen.blit(menu.image, (200, 550))
+            self.screen.blit(play_again.image, (play_again.rect.x,
+                                                play_again.rect.y))
+            self.screen.blit(menu.image, (menu.rect.x, menu.rect.y))
             self.clock.tick(FPS)
             pg.display.flip()
             for event in pg.event.get():
@@ -415,9 +416,11 @@ class Game:
         while options:
             self.screen.blit(background, (450, 0))
             self.screen.blit(background, (0, 0))
-            self.screen.blit(back.image, (500, 700))
-            self.screen.blit(switch_sound.image, (305, 150))
-            self.screen.blit(switch_music.image, (105, 150))
+            self.screen.blit(back.image, (back.rect.x, back.rect.y))
+            self.screen.blit(switch_sound.image, (switch_sound.rect.x,
+                                                  switch_sound.rect.y))
+            self.screen.blit(switch_music.image, (switch_music.rect.x,
+                                                  switch_music.rect.y))
             self.display_text("Music", 100, 90, 30, BLACK)
             self.display_text("Sound", 300, 90, 30, BLACK)
             self.clock.tick(FPS)
@@ -453,7 +456,7 @@ class Game:
             scores = open("data\\records.txt")
             self.screen.blit(background, (450, 0))
             self.screen.blit(background, (0, 0))
-            self.screen.blit(back.image, (500, 700))
+            self.screen.blit(back.image, (back.rect.x, back.rect.y))
             for line in scores:
                 self.display_text(line.replace('\n', ''),
                                   50, text_height +
